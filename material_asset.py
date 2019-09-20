@@ -9,11 +9,19 @@ class MaterialAsset(IConvertableAsset):
 
 	csv_material_line = []
 	csv_material_xmodel_line = []
+	in_path = ''
+	out_path = ''
+
+	def __init__(self, inp, outp):
+
+		self.in_path = inp
+		self.out_path = outp
+
 
 	def cleanAssetList(self):
 
 		outfile = []
-		with open("out/images_list.txt", "r+") as f:
+		with open(Path(self.out_path) / "images_list.txt", "r+") as f:
 			for line in f:
 				if not line.strip():
 					continue
@@ -25,12 +33,12 @@ class MaterialAsset(IConvertableAsset):
 
 	def loadAssets(self):
 
-		if os.path.exists("out/csv/csv_material.txt"):
-			with open("out/csv/csv_material.txt") as c:
+		if os.path.exists(Path(self.out_path) / "csv/csv_material.txt"):
+			with open(Path(self.out_path) / "csv/csv_material.txt") as c:
 				self.csv_material_line = c.readlines()
 
-		if os.path.exists("out/xmodel_material_list.txt"):
-			with open("out/xmodel_material_list.txt") as c:
+		if os.path.exists(Path(self.out_path) / "xmodel_material_list.txt"):
+			with open(Path(self.out_path) / "xmodel_material_list.txt") as c:
 				self.csv_material_xmodel_line = c.readlines()
 
 
@@ -63,35 +71,37 @@ class MaterialAsset(IConvertableAsset):
 		result = result.replace("colorTint", "")
 		result = result.replace("detailScale", "")
 
-		if not os.path.exists("out/images_list.txt"):
-			with open("out/images_list.txt", "w"): pass
+		if not os.path.exists(Path(self.out_path) / "images_list.txt"):
+			with open(Path(self.out_path) / "images_list.txt", "w"): pass
 
-		if os.path.exists("out/images_list.txt"):
-			with open("out/images_list.txt", "a") as c:
+		if os.path.exists(Path(self.out_path) / "images_list.txt"):
+			with open(Path(self.out_path) / "images_list.txt", "a") as c:
 				c.write(result)
 
 
 	def move(self, path):
 
-		for _, _, files in os.walk("in/materials", topdown = False):
+		self.out_path = path
+
+		for root, _, files in os.walk(Path(self.in_path) / "materials", topdown = False):
 			for name in files:
 
 				if name + "\n" in self.csv_material_line:
-					f = os.path.join(path, name)
+					f = Path(root) / name
 					print(name)
-					shutil.copyfile(f, Path("out/materials/") / name)
+					shutil.copyfile(f, Path(self.out_path) / Path("materials/" + name))
 
 				elif name + "\n" in self.csv_material_xmodel_line:
-					f = os.path.join(path, name)
+					f = Path(root) / name
 					print(name)
-					shutil.copyfile(f, Path("out/materials/") / name)
+					shutil.copyfile(f, Path(self.out_path) / Path("materials/" + name))
 
 
 	def convert(self):
 
-		for root, _, files in os.walk("out/materials", topdown = False):
+		for root, _, files in os.walk(Path(self.out_path) / "materials", topdown = False):
 			for name in files:
-				f = os.path.join(root, name)
+				f = Path(root) / name
 				self.findImages(f, name)
 		
 		self.cleanAssetList()
@@ -99,10 +109,11 @@ class MaterialAsset(IConvertableAsset):
 
 	def delete(self):
 
-		for root, _, files in os.walk("out/materials", topdown = False):
+		for root, _, files in os.walk(Path(self.out_path) / "materials", topdown = False):
 			for name in files:
-				f = os.path.join(root, name)
+				f = Path(root) / name
 				delete(f)
+
 
 def delete(path):
 

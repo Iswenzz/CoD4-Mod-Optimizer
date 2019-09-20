@@ -8,23 +8,33 @@ import shutil
 class ImageAsset(IConvertableAsset):
 
 	csv_images_line = []
+	in_path = ''
+	out_path = ''
+
+	def __init__(self, inp, outp):
+
+		self.in_path = inp
+		self.out_path = outp
+
 
 	def loadAssets(self):
 
-		if os.path.exists("out/images_list.txt"):
-			with open(u"out/images_list.txt") as c:
+		if os.path.exists(Path(self.out_path) / "images_list.txt"):
+			with open(Path(self.out_path) / "images_list.txt") as c:
 				self.csv_images_line = c.readlines()
 
 
 	def move(self, path):
 
-		for root, _, files in os.walk(u"in/images", topdown = False):
+		self.out_path = path
+
+		for root, _, files in os.walk(Path(self.in_path) / "images", topdown = False):
 			for name in files:
 
 				if name + "\n" in self.csv_images_line:
-					f = os.path.join(root, name)
+					f = Path(root) / name
 					print(name)
-					shutil.copyfile(u"" + f, u"out/images/" + name)
+					shutil.copyfile(f, Path(self.out_path) / Path("images/" + name))
 
 
 	def convert(self):
@@ -33,10 +43,11 @@ class ImageAsset(IConvertableAsset):
 
 	def delete(self):
 
-		for root, _, files in os.walk("out/images", topdown = False):
+		for root, _, files in os.walk(Path(self.out_path) / "images", topdown = False):
 			for name in files:
-				f = os.path.join(root, name)
+				f = Path(root) / name
 				delete(f)
+
 
 def delete(path):
 
