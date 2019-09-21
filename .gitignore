@@ -9,6 +9,12 @@ _pycache_/
 
 *.pyc
 
+*.spec
+
+dist/
+
+build/
+
 
 
 .vscode/

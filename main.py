@@ -43,19 +43,19 @@ def checkPath():
 
 	if not os.path.exists(Path(in_p)):
 		print("Folder doesn't exists: " + str(Path(in_p)))
-		exit(-1)
+		sys.exit(-1)
 	if not os.path.exists(Path(in_p) / "materials"):
 		print("Folder doesn't exists: " + str(Path(in_p) / "materials"))
-		exit(-1)
+		sys.exit(-1)
 	if not os.path.exists(Path(in_p) / "xmodel"):
 		print("Folder doesn't exists: " + str(Path(in_p) / "xmodel"))
-		exit(-1)
+		sys.exit(-1)
 	if not os.path.exists(Path(in_p) / "images"):
 		print("Folder doesn't exists: " + str(Path(in_p) / "images"))
-		exit(-1)
+		sys.exit(-1)
 	if not os.path.exists(Path(in_p) / "mod.csv"):
 		print("mod.csv doesn't exists: " + str(Path(in_p) / "mod.csv"))
-		exit(-1)
+		sys.exit(-1)
 
 	if not os.path.exists(Path(out_p)):
 		os.mkdir(Path(out_p))
