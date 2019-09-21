@@ -4,6 +4,7 @@ from pathlib import Path
 import os
 import re
 import shutil
+import codecs
 
 class XmodelAsset(IConvertableAsset):
 
@@ -25,8 +26,8 @@ class XmodelAsset(IConvertableAsset):
 			for line in f:
 				if not line.strip():
 					continue
-				if line in csv_material_all_line:
-					outfile += line
+				if line in csv_material_all_line and line not in outfile:
+					outfile.append(line)
 			f.seek(0)
 			f.writelines(outfile)
 			f.truncate()
@@ -42,24 +43,16 @@ class XmodelAsset(IConvertableAsset):
 	def findXmodels(self, path, name):
 
 		result = ""
-		valid_string = ""
-		data = ""
+		chars = r"A-Za-z0-9\-.,~_&$% "
+		shortest_run = 1
 
-		valid = "abcdefghijklmnopqrstuvwxyz_~-$0123456789."
+		regexp = '[%s]{%d,}' % (chars, shortest_run)
+		pattern = re.compile(regexp)
 
 		with open(path, "rb") as binary_file:
-			data = binary_file.read()
-
-		result = data.replace(b"\x00", b".")
-		result = result.decode("ansi")
-
-		for char in result:
-			if char in valid:
-				valid_string += char
-
-		result = re.sub(r".*" + name, "", valid_string)
-		result = result.replace(".", " ")
-		result = result.replace(" ", "\n")
+			data = binary_file.read().decode("ansi")
+			for str in pattern.findall(data):
+				result += str + "\n"
 
 		if not os.path.exists(Path(self.out_path) / "xmodel_material_list.txt"):
 			with open(Path(self.out_path) / "xmodel_material_list.txt", "w"): pass

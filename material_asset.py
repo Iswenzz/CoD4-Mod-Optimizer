@@ -4,6 +4,7 @@ from pathlib import Path
 import os
 import re
 import shutil
+import codecs
 
 class MaterialAsset(IConvertableAsset):
 
@@ -22,7 +23,8 @@ class MaterialAsset(IConvertableAsset):
 			for line in f:
 				if not line.strip():
 					continue
-				outfile += line.replace("\n", ".iwi\n")
+				if line.replace("\n", ".iwi\n") not in outfile:
+					outfile.append(line.replace("\n", ".iwi\n"))
 			f.seek(0)
 			f.writelines(outfile)
 			f.truncate()
@@ -42,31 +44,16 @@ class MaterialAsset(IConvertableAsset):
 	def findImages(self, path, name):
 
 		result = ""
-		file_string = ""
-		valid = "abcdefghijklmnopqrstuvwxyz_~-$0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&"
+		chars = r"A-Za-z0-9\-.,~_&$% "
+		shortest_run = 1
 
-		with open(path, "r", encoding = "Latin-1") as f:
-			for line in f:
-				file_string += line
+		regexp = '[%s]{%d,}' % (chars, shortest_run)
+		pattern = re.compile(regexp)
 
-		valid_string = ""
-		for char in file_string:
-			if char in valid:
-				valid_string += char
-
-		result = valid_string.replace(name, "DELETE_THIS", 1)
-		result = result.replace("2d", "DELETE_THIS", 1)
-		result = re.sub(r".*DELETE_THIS", " ", result)
-		result = re.sub(r"envMapParmscolorTint*", " ", result, 1)
-		result = result.replace("colorMap", "")
-		result = result.replace("normalMap", " ")
-		result = result.replace("specularMap", " ")
-		result = result.replace("detailMap", " ")
-		result = result.replace(" ", "\n")
-		result = result.replace("identitynormalmapcolorTint", "")
-		result = result.replace("dynamicFoliageSunDiffuseMinMax", "")
-		result = result.replace("colorTint", "")
-		result = result.replace("detailScale", "")
+		with open(path, "rb") as binary_file:
+			data = binary_file.read().decode("ansi")
+			for str in pattern.findall(data):
+				result += str + "\n"
 
 		if not os.path.exists(Path(self.out_path) / "images_list.txt"):
 			with open(Path(self.out_path) / "images_list.txt", "w"): pass
