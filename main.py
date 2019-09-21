@@ -52,6 +52,34 @@ def delete(path):
 	if os.path.exists(path):
 		os.remove(path)
 
+
+def checkPath():
+
+	if not os.path.exists(Path(in_p)):
+		print("Folder doesn't exists: " + str(Path(in_p)))
+		exit(-1)
+	if not os.path.exists(Path(in_p) / "materials"):
+		print("Folder doesn't exists: " + str(Path(in_p) / "materials"))
+		exit(-1)
+	if not os.path.exists(Path(in_p) / "xmodel"):
+		print("Folder doesn't exists: " + str(Path(in_p) / "xmodel"))
+		exit(-1)
+	if not os.path.exists(Path(in_p) / "images"):
+		print("Folder doesn't exists: " + str(Path(in_p) / "images"))
+		exit(-1)
+
+	if not os.path.exists(Path(out_p)):
+		os.mkdir(Path(out_p))
+	if not os.path.exists(Path(out_p) / "materials"):
+		os.mkdir(Path(out_p) / "materials")
+	if not os.path.exists(Path(out_p) / "xmodel"):
+		os.mkdir(Path(out_p) / "xmodel")
+	if not os.path.exists(Path(out_p) / "images"):
+		os.mkdir(Path(out_p) / "images")
+	if not os.path.exists(Path(out_p) / "csv"):
+		os.mkdir(Path(out_p) / "csv")
+
+
 def main():
 
 	global in_p
@@ -66,6 +94,8 @@ def main():
 			+ "\t<input path> <output path> (default path is: EXE_DIR/in, EXE_DIR/out)\n\n")
 
 	print("Input PATH: " + in_p + "\nOutput PATH: " + out_p + "\n")
+
+	checkPath()
 
 	Materials = MaterialAsset(in_p, out_p)
 	XModels = XmodelAsset(in_p, out_p)
