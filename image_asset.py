@@ -7,12 +7,9 @@ import shutil
 
 class ImageAsset(IConvertableAsset):
 
-	csv_images_line = []
-	in_path = ''
-	out_path = ''
-
 	def __init__(self, inp, outp):
 
+		self.csv_images_line = []
 		self.in_path = inp
 		self.out_path = outp
 

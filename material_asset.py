@@ -7,13 +7,10 @@ import shutil
 
 class MaterialAsset(IConvertableAsset):
 
-	csv_material_line = []
-	csv_material_xmodel_line = []
-	in_path = ''
-	out_path = ''
-
 	def __init__(self, inp, outp):
 
+		self.csv_material_line = []
+		self.csv_material_xmodel_line = []
 		self.in_path = inp
 		self.out_path = outp
 

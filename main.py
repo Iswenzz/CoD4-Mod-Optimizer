@@ -1,16 +1,11 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from pathlib import Path
 from material_asset import MaterialAsset
 from image_asset import ImageAsset
 from xmodel_asset import XmodelAsset
+from csv_file import CSV
 
 import os
 import sys
-import re
-import shutil
-import msvcrt
-import time
 
 in_p = "in"
 out_p = "out"
@@ -24,27 +19,18 @@ def parseCSV():
 	if not os.path.exists(Path(out_p) / "csv/csv_material_all.txt"):
 		with open(Path(out_p) / "csv/csv_material_all.txt", "w"): pass
 
-	csv_input = open(Path(in_p) / "csv/mod.csv", "r")
-	csv_material_output = open(Path(out_p) / "csv/csv_material.txt", "w")
-	csv_material_all_output = open(Path(out_p) / "csv/csv_material_all.txt", "w")
-	csv_xmodel_output = open(Path(out_p) / "csv/csv_xmodel.txt", "w")
+	csv_input = CSV(Path(in_p) / "mod.csv")
+	csv_input.parse(csv_input.csv_path, useAssetType = False)
 
-	with open(Path(in_p) / "csv/mod.csv") as csv_input:
-		for line in csv_input:
+	with open(Path(out_p) / "csv/csv_material.txt", "w") as f:
+		f.writelines(csv_input.csv_assets["material"])
+	with open(Path(out_p) / "csv/csv_xmodel.txt", "w") as f:
+		f.writelines(csv_input.csv_assets["xmodel"])
 
-			if "xmodel," in line:
-				csv_xmodel_output.write(line.replace("xmodel,", ""))
-			elif "material," in line:
-				csv_material_output.write(line.replace("material,", ""))
-
-	for _, _, files in os.walk(Path(in_p) / "materials", topdown = False):
-		for name in files:
-			csv_material_all_output.write(name + "\n")
-
-	csv_input.close()
-	csv_material_output.close()
-	csv_material_all_output.close()
-	csv_xmodel_output.close()
+	with open(Path(out_p) / "csv/csv_material_all.txt", "w") as f:
+		for _, _, files in os.walk(Path(in_p) / "materials", topdown = False):
+			for name in files:
+				f.write(name + "\n")
 
 
 def delete(path):
@@ -66,6 +52,9 @@ def checkPath():
 		exit(-1)
 	if not os.path.exists(Path(in_p) / "images"):
 		print("Folder doesn't exists: " + str(Path(in_p) / "images"))
+		exit(-1)
+	if not os.path.exists(Path(in_p) / "mod.csv"):
+		print("mod.csv doesn't exists: " + str(Path(in_p) / "mod.csv"))
 		exit(-1)
 
 	if not os.path.exists(Path(out_p)):
@@ -151,7 +140,6 @@ def convert(in_path = None, out_path = None):
 	Images.move(Images.out_path)
 
 	print("\nDone!\n")
-	print("Press any key to continue...")
 
 
 if __name__ == "__main__":

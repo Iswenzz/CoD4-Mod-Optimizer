@@ -7,12 +7,9 @@ import shutil
 
 class XmodelAsset(IConvertableAsset):
 
-	csv_xmodel_line = []
-	in_path = ''
-	out_path = ''
-
 	def __init__(self, inp, outp):
 
+		self.csv_xmodel_line = []
 		self.in_path = inp
 		self.out_path = outp
 
