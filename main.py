@@ -95,6 +95,18 @@ def main():
 
 	print("Input PATH: " + in_p + "\nOutput PATH: " + out_p + "\n")
 
+	convert()
+
+
+def convert(in_path = None, out_path = None):
+
+	if in_path is not None:
+		global in_p
+		in_p = in_path
+	if out_path is not None:
+		global out_p
+		out_p = out_path
+
 	checkPath()
 
 	Materials = MaterialAsset(in_p, out_p)
@@ -112,34 +124,35 @@ def main():
 	Images.delete()
 
 	print("Parsing CSV...")
-	
+
 	parseCSV()
 
 	print("\n#####################################\n"
-		+ "               XModels\n"
-		+ "#####################################\n")
+            + "               XModels\n"
+            + "#####################################\n")
 
 	XModels.loadAssets()
 	XModels.move(XModels.out_path)
 	XModels.convert()
 
 	print("\n#####################################\n"
-		+ "              Materials\n"
-		+ "#####################################\n")
+            + "              Materials\n"
+            + "#####################################\n")
 
 	Materials.loadAssets()
 	Materials.move(Materials.out_path)
 	Materials.convert()
 
 	print("\n#####################################\n"
-		+ "               Images\n"
-		+ "#####################################\n")
+            + "               Images\n"
+            + "#####################################\n")
 
 	Images.loadAssets()
 	Images.move(Images.out_path)
 
 	print("\nDone!\n")
 	print("Press any key to continue...")
-	# msvcrt.getch()
 
-main()
+
+if __name__ == "__main__":
+	main()
