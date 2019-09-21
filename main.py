@@ -102,11 +102,11 @@ def convert(in_path = None, out_path = None):
 	XModels = XmodelAsset(in_p, out_p)
 	Images = ImageAsset(in_p, out_p)
 
-	delete(Path(in_p) / "csv/csv_material.txt")
-	delete(Path(in_p) / "csv/csv_material_all.txt")
-	delete(Path(in_p) / "csv/csv_xmodel.txt")
-	delete(Path(in_p) / "images_list.txt")
-	delete(Path(in_p) / "xmodel_material_list.txt")
+	delete(Path(out_p) / "csv/csv_material.txt")
+	delete(Path(out_p) / "csv/csv_material_all.txt")
+	delete(Path(out_p) / "csv/csv_xmodel.txt")
+	delete(Path(out_p) / "images_list.txt")
+	delete(Path(out_p) / "xmodel_material_list.txt")
 
 	Materials.delete()
 	XModels.delete()
