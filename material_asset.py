@@ -52,8 +52,8 @@ class MaterialAsset(IConvertableAsset):
 
 		with open(path, "rb") as binary_file:
 			data = binary_file.read().decode("ansi")
-			for str in pattern.findall(data):
-				result += str + "\n"
+			for _str in pattern.findall(data):
+				result += _str + "\n"
 
 		if not os.path.exists(Path(self.out_path) / "images_list.txt"):
 			with open(Path(self.out_path) / "images_list.txt", "w"): pass
