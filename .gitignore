@@ -22,3 +22,7 @@ build/
 .coverage
 
 optimizer/tests/
+
+COVERAGE.sh
+
+coverage.xml

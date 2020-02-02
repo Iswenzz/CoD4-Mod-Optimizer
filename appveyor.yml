@@ -1,0 +1,16 @@
+version: 1.0.0.{build}
+image: Visual Studio 2019
+
+configuration: Release
+platform: AnyCPU
+
+environment:
+  matrix:
+  - PYTHON: 36
+
+build_script:
+- ps: |
+    python main.py
+    
+build:
+  verbosity: minimal
