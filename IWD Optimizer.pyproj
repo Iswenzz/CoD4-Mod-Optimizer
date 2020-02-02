@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b8dd42e4-37df-4460-85a5-13d8751ec637</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>optimizer\main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -28,22 +28,29 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="assets\csv_file.py" />
-    <Compile Include="assets\iconvertableasset.py" />
-    <Compile Include="assets\image_asset.py" />
-    <Compile Include="assets\__init__.py">
+    <Compile Include="optimizer\assets\csv_file.py" />
+    <Compile Include="optimizer\assets\iconvertableasset.py" />
+    <Compile Include="optimizer\assets\image_asset.py" />
+    <Compile Include="optimizer\assets\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="main.py" />
-    <Compile Include="assets\material_asset.py" />
-    <Compile Include="tests\test_material.py">
+    <Compile Include="optimizer\main.py" />
+    <Compile Include="optimizer\assets\material_asset.py" />
+    <Compile Include="optimizer\tests\test_main.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="assets\xmodel_asset.py" />
+    <Compile Include="optimizer\assets\xmodel_asset.py" />
+    <Compile Include="optimizer\tests\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="optimizer\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="assets\" />
-    <Folder Include="tests\" />
+    <Folder Include="optimizer\assets\" />
+    <Folder Include="optimizer\" />
+    <Folder Include="optimizer\tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
