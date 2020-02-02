@@ -55,7 +55,8 @@ class XmodelAsset(IConvertableAsset):
 				result += _str + "\n"
 
 		if not os.path.exists(Path(self.out_path) / "xmodel_material_list.txt"):
-			with open(Path(self.out_path) / "xmodel_material_list.txt", "w"): pass
+			with open(Path(self.out_path) / "xmodel_material_list.txt", "w"): 
+				pass
 
 		if os.path.exists(Path(self.out_path) / "xmodel_material_list.txt"):
 			with open(Path(self.out_path) / "xmodel_material_list.txt", "a") as c:
