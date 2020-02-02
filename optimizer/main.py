@@ -1,5 +1,5 @@
 from pathlib import Path
-from optimizer.assets import CSV, MaterialAsset, ImageAsset, XmodelAsset
+from assets import CSV, MaterialAsset, ImageAsset, XmodelAsset
 
 import os
 import sys
@@ -41,6 +41,11 @@ def checkPath(in_path = None, out_path = None):
 	in_check = ["materials", "xmodel", "images"]
 	out_check = ["materials", "xmodel", "images", "csv"]
 
+	if not os.path.exists(in_path):
+		os.mkdir(in_path)
+	if not os.path.exists(out_path):
+		os.mkdir(out_path)
+
 	for f in in_check:
 		if not os.path.exists(Path(in_path) / f):
 			os.mkdir(Path(in_path) / f)
@@ -51,7 +56,7 @@ def checkPath(in_path = None, out_path = None):
 
 	if not os.path.exists(Path(in_path) / "mod.csv"):
 		print("ERROR: File " + str(Path(in_path) / "mod.csv") + " not found.")
-		sys.exit(-1)
+		sys.exit()
 
 
 def main():

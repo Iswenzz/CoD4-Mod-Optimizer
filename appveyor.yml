@@ -1,16 +1,10 @@
 version: 1.0.0.{build}
 image: Visual Studio 2019
 
-configuration: Release
-platform: AnyCPU
-
-environment:
-  matrix:
-  - PYTHON: 36
-
 build_script:
-- ps: |
-    python main.py
-    
-build:
-  verbosity: minimal
+- cmd: >-
+    SET PATH="C:\Python37-x64"
+
+    python -V
+
+    python optimizer/main.py
