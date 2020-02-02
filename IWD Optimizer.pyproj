@@ -15,6 +15,9 @@
     <UnitTestPattern>test*.py</UnitTestPattern>
     <UnitTestRootDirectory>.</UnitTestRootDirectory>
     <IsWindowsApplication>False</IsWindowsApplication>
+    <InterpreterId>
+    </InterpreterId>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,12 +28,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="csv_file.py" />
-    <Compile Include="iconvertableasset.py" />
-    <Compile Include="image_asset.py" />
+    <Compile Include="assets\csv_file.py" />
+    <Compile Include="assets\iconvertableasset.py" />
+    <Compile Include="assets\image_asset.py" />
+    <Compile Include="assets\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="main.py" />
-    <Compile Include="material_asset.py" />
-    <Compile Include="xmodel_asset.py" />
+    <Compile Include="assets\material_asset.py" />
+    <Compile Include="tests\test_material.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="assets\xmodel_asset.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\" />
+    <Folder Include="tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

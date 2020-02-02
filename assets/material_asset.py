@@ -1,4 +1,4 @@
-from iconvertableasset import IConvertableAsset
+from .iconvertableasset import IConvertableAsset
 from pathlib import Path
 
 import os

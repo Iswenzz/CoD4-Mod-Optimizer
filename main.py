@@ -1,8 +1,5 @@
 from pathlib import Path
-from material_asset import MaterialAsset
-from image_asset import ImageAsset
-from xmodel_asset import XmodelAsset
-from csv_file import CSV
+from assets import CSV, MaterialAsset, ImageAsset, XmodelAsset
 
 import os
 import sys
