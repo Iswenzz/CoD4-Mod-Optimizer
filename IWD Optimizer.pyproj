@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b8dd42e4-37df-4460-85a5-13d8751ec637</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>optimizer\main.py</StartupFile>
+    <StartupFile>optimizer\__main__.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -34,7 +34,7 @@
     <Compile Include="optimizer\assets\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="optimizer\main.py" />
+    <Compile Include="optimizer\__main__.py" />
     <Compile Include="optimizer\assets\material_asset.py" />
     <Compile Include="optimizer\tests\test_main.py">
       <SubType>Code</SubType>

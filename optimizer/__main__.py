@@ -1,5 +1,5 @@
 from pathlib import Path
-from assets import CSV, MaterialAsset, ImageAsset, XmodelAsset
+from optimizer.assets import CSV, MaterialAsset, ImageAsset, XmodelAsset
 
 import os
 import sys

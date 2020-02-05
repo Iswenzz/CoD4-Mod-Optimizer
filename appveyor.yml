@@ -7,4 +7,4 @@ build_script:
 
     python -V
 
-    python optimizer/main.py
+    python -m optimizer
