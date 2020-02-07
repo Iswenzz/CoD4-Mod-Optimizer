@@ -29,17 +29,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="optimizer\assets\csv_file.py" />
-    <Compile Include="optimizer\assets\iconvertableasset.py" />
-    <Compile Include="optimizer\assets\image_asset.py" />
+    <Compile Include="optimizer\assets\i_optimizable_container.py" />
+    <Compile Include="optimizer\assets\image_container.py" />
     <Compile Include="optimizer\assets\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="optimizer\__main__.py" />
-    <Compile Include="optimizer\assets\material_asset.py" />
+    <Compile Include="optimizer\assets\material_container.py" />
     <Compile Include="optimizer\tests\test_main.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="optimizer\assets\xmodel_asset.py" />
+    <Compile Include="optimizer\assets\xmodel_container.py" />
     <Compile Include="optimizer\tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>

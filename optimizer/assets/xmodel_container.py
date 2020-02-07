@@ -1,4 +1,4 @@
-from optimizer.assets.iconvertableasset import IConvertableAsset
+from optimizer.assets.i_optimizable_container import IOptimizableContainer
 from pathlib import Path
 
 import os
@@ -6,17 +6,27 @@ import re
 import shutil
 import codecs
 
-class XmodelAsset(IConvertableAsset):
+class XmodelContainer(IOptimizableContainer):
+	"""
+	Represent an asset container of CoD4 xmodel files.
+	"""
 
 	def __init__(self, inp, outp):
+		"""
+		Initialize a new XmodelContainer object.
 
+		inp: input xmodel folder path.
+		outp: output xmodel folder path.
+		"""
 		self.csv_xmodel_line = []
 		self.in_path = inp
 		self.out_path = outp
 
 
 	def cleanAssetList(self):
-
+		"""
+		Create a new CSV hint file with the optimized assets.
+		"""
 		if os.path.exists(Path(self.out_path) / "csv/csv_material_all.txt"):
 			with open(Path(self.out_path) / "csv/csv_material_all.txt") as c:
 				csv_material_all_line = c.readlines()
@@ -34,14 +44,18 @@ class XmodelAsset(IConvertableAsset):
 
 
 	def loadAssets(self):
-
+		"""
+		Load all xmodel from the CSV Hint file.
+		"""
 		if os.path.exists(Path(self.out_path) / "csv/csv_xmodel.txt"):
 			with open(Path(self.out_path) / "csv/csv_xmodel.txt") as c:
 				self.csv_xmodel_line = c.readlines()
 
 
 	def findXmodels(self, path, name):
-
+		"""
+		Find all materials used by the xmodel.
+		"""
 		result = ""
 		chars = r"A-Za-z0-9\-.,~_&$% "
 		shortest_run = 1
@@ -64,7 +78,9 @@ class XmodelAsset(IConvertableAsset):
 	
 
 	def move(self, path):
-
+		"""
+		Move all xmodel to a specified path.
+		"""
 		self.out_path = path
 
 		for root, _, files in os.walk(Path(self.in_path) / "xmodel", topdown = False):
@@ -76,8 +92,10 @@ class XmodelAsset(IConvertableAsset):
 					shutil.copyfile(f, Path(self.out_path) / Path("xmodel/" + name))
 
 
-	def convert(self):
-
+	def optimize(self):
+		"""
+		Optimize all xmodel.
+		"""
 		for root, _, files in os.walk(Path(self.out_path) / "xmodel", topdown = False):
 			for name in files:
 				f = Path(root) / name
@@ -87,7 +105,9 @@ class XmodelAsset(IConvertableAsset):
 
 	
 	def delete(self):
-
+		"""
+		Delete all xmodel.
+		"""
 		for root, _, files in os.walk(Path(self.out_path) / "xmodel", topdown = False):
 			for name in files:
 				f = Path(root) / name
@@ -95,6 +115,8 @@ class XmodelAsset(IConvertableAsset):
 
 
 def delete(path):
-
+	"""
+	Delete a file from a specified path.
+	"""
 	if os.path.exists(path):
 		os.remove(path)

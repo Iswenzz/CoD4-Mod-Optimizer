@@ -1,11 +1,14 @@
 from pathlib import Path
-from optimizer.assets import CSV, MaterialAsset, ImageAsset, XmodelAsset
+from optimizer.assets import CSV, MaterialContainer, ImageContainer, XmodelContainer
 
 import os
 import sys
 
 def parseCSV(in_path = None, out_path = None):
-
+	"""
+	Parse the main mod CSV and create hint txt files to be used 
+	later with an asset container.
+	"""
 	if not os.path.exists(Path(out_path) / "csv/csv_material.txt"):
 		with open(Path(out_path) / "csv/csv_material.txt", "w"):
 			pass
@@ -31,13 +34,17 @@ def parseCSV(in_path = None, out_path = None):
 
 
 def delete(path):
-
+	"""
+	Delete a file from a specified path.
+	"""
 	if os.path.exists(path):
 		os.remove(path)
 
 
 def checkPath(in_path = None, out_path = None):
-
+	"""
+	Setup all necessary folders and check if a mod CSV exists.
+	"""
 	in_check = ["materials", "xmodel", "images"]
 	out_check = ["materials", "xmodel", "images", "csv"]
 
@@ -60,7 +67,9 @@ def checkPath(in_path = None, out_path = None):
 
 
 def main():
-
+	"""
+	Entry point of the program.
+	"""
 	in_p = "in"
 	out_p = "out"
 
@@ -76,30 +85,31 @@ Usage: IWD Optimizer.exe "C:/cod4/mod/name" "C:/cod4/mod/name/opti"
 """)
 
 	print("Input PATH: " + in_p + "\nOutput PATH: " + out_p + "\n")
-
 	convert(in_p, out_p)
 
 
 def convert(in_path = None, out_path = None):
-
+	"""
+	Convert all known assets.
+	"""
+	# Create default folders.
 	checkPath(in_path, out_path)
 
-	Materials = MaterialAsset(in_path, out_path)
-	XModels = XmodelAsset(in_path, out_path)
-	Images = ImageAsset(in_path, out_path)
+	Materials = MaterialContainer(in_path, out_path)
+	XModels = XmodelContainer(in_path, out_path)
+	Images = ImageContainer(in_path, out_path)
 
+	# Delete any previous optimization.
 	delete(Path(out_path) / "csv/csv_material.txt")
 	delete(Path(out_path) / "csv/csv_material_all.txt")
 	delete(Path(out_path) / "csv/csv_xmodel.txt")
 	delete(Path(out_path) / "images_list.txt")
 	delete(Path(out_path) / "xmodel_material_list.txt")
-
 	Materials.delete()
 	XModels.delete()
 	Images.delete()
 
 	print("Parsing CSV...")
-
 	parseCSV(in_path, out_path)
 
 	print("""
@@ -110,7 +120,7 @@ def convert(in_path = None, out_path = None):
 
 	XModels.loadAssets()
 	XModels.move(XModels.out_path)
-	XModels.convert()
+	XModels.optimize()
 
 	print("""
 #####################################
@@ -120,7 +130,7 @@ def convert(in_path = None, out_path = None):
 
 	Materials.loadAssets()
 	Materials.move(Materials.out_path)
-	Materials.convert()
+	Materials.optimize()
 
 	print("""
 #####################################

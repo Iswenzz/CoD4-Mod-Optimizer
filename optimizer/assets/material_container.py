@@ -1,4 +1,4 @@
-from optimizer.assets.iconvertableasset import IConvertableAsset
+from optimizer.assets.i_optimizable_container import IOptimizableContainer
 from pathlib import Path
 
 import os
@@ -6,10 +6,18 @@ import re
 import shutil
 import codecs
 
-class MaterialAsset(IConvertableAsset):
+class MaterialContainer(IOptimizableContainer):
+	"""
+	Represent an asset container of CoD4 material files.
+	"""
 
 	def __init__(self, inp, outp):
+		"""
+		Initialize a new MaterialContainer object.
 
+		inp: input material folder path.
+		outp: output material folder path.
+		"""
 		self.csv_material_line = []
 		self.csv_material_xmodel_line = []
 		self.in_path = inp
@@ -17,7 +25,9 @@ class MaterialAsset(IConvertableAsset):
 
 
 	def cleanAssetList(self):
-
+		"""
+		Create a new CSV hint file with the optimized assets.
+		"""
 		outfile = []
 		with open(Path(self.out_path) / "images_list.txt", "r+") as f:
 			for line in f:
@@ -31,7 +41,9 @@ class MaterialAsset(IConvertableAsset):
 
 
 	def loadAssets(self):
-
+		"""
+		Load all material from the CSV Hint file.
+		"""
 		if os.path.exists(Path(self.out_path) / "csv/csv_material.txt"):
 			with open(Path(self.out_path) / "csv/csv_material.txt") as c:
 				self.csv_material_line = c.readlines()
@@ -42,7 +54,9 @@ class MaterialAsset(IConvertableAsset):
 
 
 	def findImages(self, path, name):
-
+		"""
+		Find all images used by the material.
+		"""
 		result = ""
 		chars = r"A-Za-z0-9\-.,~_&$% "
 		shortest_run = 1
@@ -65,7 +79,9 @@ class MaterialAsset(IConvertableAsset):
 
 
 	def move(self, path):
-
+		"""
+		Move all material to a specified path.
+		"""
 		self.out_path = path
 
 		for root, _, files in os.walk(Path(self.in_path) / "materials", topdown = False):
@@ -82,8 +98,10 @@ class MaterialAsset(IConvertableAsset):
 					shutil.copyfile(f, Path(self.out_path) / Path("materials/" + name))
 
 
-	def convert(self):
-
+	def optimize(self):
+		"""
+		Optimize all material.
+		"""
 		for root, _, files in os.walk(Path(self.out_path) / "materials", topdown = False):
 			for name in files:
 				f = Path(root) / name
@@ -93,7 +111,9 @@ class MaterialAsset(IConvertableAsset):
 
 
 	def delete(self):
-
+		"""
+		Delete all material.
+		"""
 		for root, _, files in os.walk(Path(self.out_path) / "materials", topdown = False):
 			for name in files:
 				f = Path(root) / name
@@ -101,6 +121,8 @@ class MaterialAsset(IConvertableAsset):
 
 
 def delete(path):
-
+	"""
+	Delete a file from a specified path.
+	"""
 	if os.path.exists(path):
 		os.remove(path)
