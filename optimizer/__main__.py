@@ -118,7 +118,7 @@ def convert(in_path = None, out_path = None):
 #####################################
 """)
 
-	XModels.loadAssets()
+	XModels.load_assets()
 	XModels.move(XModels.out_path)
 	XModels.optimize()
 
@@ -128,7 +128,7 @@ def convert(in_path = None, out_path = None):
 #####################################
 """)
 
-	Materials.loadAssets()
+	Materials.load_assets()
 	Materials.move(Materials.out_path)
 	Materials.optimize()
 
@@ -138,7 +138,7 @@ def convert(in_path = None, out_path = None):
 #####################################
 """)
 
-	Images.loadAssets()
+	Images.load_assets()
 	Images.move(Images.out_path)
 
 	print("\nDone!\n")

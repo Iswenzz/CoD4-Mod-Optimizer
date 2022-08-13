@@ -1,5 +1,5 @@
+from optimizer.assets.csv import CSV
 from optimizer.assets.material_container import MaterialContainer
 from optimizer.assets.xmodel_container import XmodelContainer
 from optimizer.assets.image_container import ImageContainer
-from optimizer.assets.csv_file import CSV
 from optimizer.assets.i_optimizable_container import IOptimizableContainer

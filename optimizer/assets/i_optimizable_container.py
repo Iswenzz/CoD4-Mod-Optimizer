@@ -1,5 +1,4 @@
 from abc import abstractmethod
-import os
 
 class IOptimizableContainer():
 	"""
@@ -7,7 +6,7 @@ class IOptimizableContainer():
 	"""
 
 	@abstractmethod
-	def loadAssets(self):
+	def load_assets(self):
 		"""
 		Load all assets from the CSV hint file.
 		"""

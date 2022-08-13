@@ -4,26 +4,25 @@ from pathlib import Path
 import os
 import re
 import shutil
-import codecs
 
 class XmodelContainer(IOptimizableContainer):
 	"""
 	Represent an asset container of CoD4 xmodel files.
 	"""
 
-	def __init__(self, inp, outp):
+	def __init__(self, in_path, out_path):
 		"""
 		Initialize a new XmodelContainer object.
 
 		inp: input xmodel folder path.
 		outp: output xmodel folder path.
 		"""
-		self.csv_xmodel_line = []
-		self.in_path = inp
-		self.out_path = outp
+		self.csv_xmodel_lines = []
+		self.in_path = in_path
+		self.out_path = out_path
 
 
-	def cleanAssetList(self):
+	def clean_asset_list(self):
 		"""
 		Create a new CSV hint file with the optimized assets.
 		"""
@@ -43,16 +42,16 @@ class XmodelContainer(IOptimizableContainer):
 			f.truncate()
 
 
-	def loadAssets(self):
+	def load_assets(self):
 		"""
 		Load all xmodel from the CSV Hint file.
 		"""
 		if os.path.exists(Path(self.out_path) / "csv/csv_xmodel.txt"):
 			with open(Path(self.out_path) / "csv/csv_xmodel.txt") as c:
-				self.csv_xmodel_line = c.readlines()
+				self.csv_xmodel_lines = c.readlines()
 
 
-	def findXmodels(self, path, name):
+	def find_xmodels(self, path):
 		"""
 		Find all materials used by the xmodel.
 		"""
@@ -86,7 +85,7 @@ class XmodelContainer(IOptimizableContainer):
 		for root, _, files in os.walk(Path(self.in_path) / "xmodel", topdown = False):
 			for name in files:
 
-				if name + "\n" in self.csv_xmodel_line:
+				if name + "\n" in self.csv_xmodel_lines:
 					f = Path(root) / name
 					print(name)
 					shutil.copyfile(f, Path(self.out_path) / Path("xmodel/" + name))
@@ -99,9 +98,9 @@ class XmodelContainer(IOptimizableContainer):
 		for root, _, files in os.walk(Path(self.out_path) / "xmodel", topdown = False):
 			for name in files:
 				f = Path(root) / name
-				self.findXmodels(f, name)
+				self.find_xmodels(f)
 
-		self.cleanAssetList()
+		self.clean_asset_list()
 
 	
 	def delete(self):
@@ -111,12 +110,5 @@ class XmodelContainer(IOptimizableContainer):
 		for root, _, files in os.walk(Path(self.out_path) / "xmodel", topdown = False):
 			for name in files:
 				f = Path(root) / name
-				delete(f)
-
-
-def delete(path):
-	"""
-	Delete a file from a specified path.
-	"""
-	if os.path.exists(path):
-		os.remove(path)
+				if os.path.exists(f):
+					os.remove(f)

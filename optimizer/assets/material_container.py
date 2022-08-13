@@ -4,27 +4,26 @@ from pathlib import Path
 import os
 import re
 import shutil
-import codecs
 
 class MaterialContainer(IOptimizableContainer):
 	"""
 	Represent an asset container of CoD4 material files.
 	"""
 
-	def __init__(self, inp, outp):
+	def __init__(self, in_path, out_path):
 		"""
 		Initialize a new MaterialContainer object.
 
 		inp: input material folder path.
 		outp: output material folder path.
 		"""
-		self.csv_material_line = []
-		self.csv_material_xmodel_line = []
-		self.in_path = inp
-		self.out_path = outp
+		self.csv_material_lines = []
+		self.csv_material_xmodel_lines = []
+		self.in_path = in_path
+		self.out_path = out_path
 
 
-	def cleanAssetList(self):
+	def clean_asset_list(self):
 		"""
 		Create a new CSV hint file with the optimized assets.
 		"""
@@ -40,20 +39,20 @@ class MaterialContainer(IOptimizableContainer):
 			f.truncate()
 
 
-	def loadAssets(self):
+	def load_assets(self):
 		"""
 		Load all material from the CSV Hint file.
 		"""
 		if os.path.exists(Path(self.out_path) / "csv/csv_material.txt"):
 			with open(Path(self.out_path) / "csv/csv_material.txt") as c:
-				self.csv_material_line = c.readlines()
+				self.csv_material_lines = c.readlines()
 
 		if os.path.exists(Path(self.out_path) / "xmodel_material_list.txt"):
 			with open(Path(self.out_path) / "xmodel_material_list.txt") as c:
-				self.csv_material_xmodel_line = c.readlines()
+				self.csv_material_xmodel_lines = c.readlines()
 
 
-	def findImages(self, path, name):
+	def find_images(self, path):
 		"""
 		Find all images used by the material.
 		"""
@@ -87,12 +86,12 @@ class MaterialContainer(IOptimizableContainer):
 		for root, _, files in os.walk(Path(self.in_path) / "materials", topdown = False):
 			for name in files:
 
-				if name + "\n" in self.csv_material_line:
+				if name + "\n" in self.csv_material_lines:
 					f = Path(root) / name
 					print(name)
 					shutil.copyfile(f, Path(self.out_path) / Path("materials/" + name))
 
-				elif name + "\n" in self.csv_material_xmodel_line:
+				elif name + "\n" in self.csv_material_xmodel_lines:
 					f = Path(root) / name
 					print(name)
 					shutil.copyfile(f, Path(self.out_path) / Path("materials/" + name))
@@ -105,9 +104,9 @@ class MaterialContainer(IOptimizableContainer):
 		for root, _, files in os.walk(Path(self.out_path) / "materials", topdown = False):
 			for name in files:
 				f = Path(root) / name
-				self.findImages(f, name)
+				self.find_images(f)
 		
-		self.cleanAssetList()
+		self.clean_asset_list()
 
 
 	def delete(self):
@@ -117,12 +116,5 @@ class MaterialContainer(IOptimizableContainer):
 		for root, _, files in os.walk(Path(self.out_path) / "materials", topdown = False):
 			for name in files:
 				f = Path(root) / name
-				delete(f)
-
-
-def delete(path):
-	"""
-	Delete a file from a specified path.
-	"""
-	if os.path.exists(path):
-		os.remove(path)
+				if os.path.exists(f):
+					os.remove(f)

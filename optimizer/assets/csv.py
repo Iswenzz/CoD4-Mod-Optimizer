@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import NamedTuple
 from dataclasses import dataclass
 
 class CSV():
@@ -76,7 +75,7 @@ class CSV():
 		return self
 
 
-	def saveList(self, path, list):
+	def save_list(self, path, list):
 		"""
 		Save assets to a file.
 		"""

@@ -27,8 +27,21 @@
     <DebugSymbols>true</DebugSymbols>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Invert' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\Invert\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Test' ">
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DebugTest' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\DebugTest\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="optimizer\assets\csv_file.py" />
+    <Compile Include="optimizer\assets\csv.py" />
     <Compile Include="optimizer\assets\i_optimizable_container.py" />
     <Compile Include="optimizer\assets\image_container.py" />
     <Compile Include="optimizer\assets\__init__.py">
