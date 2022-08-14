@@ -9,5 +9,5 @@ assets_directories: Dict[str, List[str]] = {
     "menufile": ["ui", "ui_mp"],
     "fx": ["fx"],
     "localize": ["english/localizedstrings"],
-    "image": ["images"]
+    "image": ["images"],
 }
