@@ -1,103 +1,52 @@
 from pathlib import Path
-from dataclasses import dataclass
-
-class CSV():
-	"""
-	Represent a COD4 CSV file.
-	"""
-
-	@dataclass
-	class AssetType:
-		"""
-		Asset tuple containing a parsing hint for one type of asset, 
-		and a list containing all asset of the same type.
-		"""
-		list: list
-		parseName: str
+from typing import Dict, List
+import os
 
 
-	def __init__(self, path):
-		"""
-		Initialize a new CSV object.
-		"""
-		self.csv_path = path
-		self.csv_assets = {
-			"xmodel": list(),
-			"material": list(),
-			"sound": list(),
-			"weapon": list(),
-			"xanim": list(),
-			"menufile": list(),
-			"fx": list(),
-			"rawfile": list(),
-			"localize": list(),
-			"stringtable": list(),
-		}
-		self.csv_assets_tuple = [
-			self.AssetType(self.csv_assets["xmodel"], "xmodel,"),
-			self.AssetType(self.csv_assets["material"], "material,"),
-			self.AssetType(self.csv_assets["sound"], "sound,"),
-			self.AssetType(self.csv_assets["weapon"], "weapon,"),
-			self.AssetType(self.csv_assets["xanim"], "xanim,"),
-			self.AssetType(self.csv_assets["menufile"], "menufile,"),
-			self.AssetType(self.csv_assets["fx"], "fx,"),
-			self.AssetType(self.csv_assets["rawfile"], "rawfile,"),
-			self.AssetType(self.csv_assets["localize"], "localize,"),
-			self.AssetType(self.csv_assets["stringtable"], "stringtable,"),
-		]
+class CSV:
+    """
+    Represent a COD4 CSV file.
+    """
 
-	
-	def __getitem__(self, k):
-		"""
-		Indexer get asset type.
-		"""
-		return self.csv_assets[k]
+    csv_assets: Dict[str, List[str]] = {
+        "xmodel": [],
+        "material": [],
+        "sound": [],
+        "weapon": [],
+        "xanim": [],
+        "menufile": [],
+        "fx": [],
+        "localize": [],
+    }
 
+    def __init__(self, csv_path: str):
+        """
+        Initialize a new CSV object.
+        """
+        self.csv_path = csv_path
 
-	def __setitem__(self, k, list):
-		"""
-		Indexer set asset type.
-		"""
-		self.csv_assets[k] = list
+    def __getitem__(self, name: str) -> List[str]:
+        """
+        Indexer get asset type.
+        """
+        return self.csv_assets[name]
 
+    def __setitem__(self, name: str, assets: list):
+        """
+        Indexer set asset type.
+        """
+        self.csv_assets[name] = assets
 
-	def __add__(self, other):
-		"""
-		Merge CSV data.
-		"""
-		s_info = self.csv_assets.values()
-		o_info = other.csv_assets.values()
-
-		for i in range(len(self.csv_assets)):
-			for line in o_info[i]:
-				s_info[i] += line
-			
-		return self
-
-
-	def save_list(self, path, list):
-		"""
-		Save assets to a file.
-		"""
-		with open(Path(path), "w") as f:
-			f.writelines(list)
-
-	
-	def save(self, path):
-		"""
-		Save all assets to a file.
-		"""
-		with open(Path(path), "w") as f:
-			for list in self.csv_assets.values():
-				f.writelines(list)
-
-
-	def parse(self, path, useAssetType = True):
-		"""
-		Parse an existing CSV file.
-		"""
-		with open(Path(self.csv_path)) as csv_input:
-			for line in csv_input:
-				for asset in self.csv_assets_tuple:
-					if asset.parseName in line:
-						asset.list += line if useAssetType else line.replace(asset.parseName, "")
+    def parse(self):
+        """
+        Parse the CSV assets.
+        """
+        with open(Path(self.csv_path)) as f:
+            # Parse lines
+            for line in f:
+                for name, list in self.csv_assets.items():
+                    delimiter = name + ","
+                    if line.startswith(delimiter):
+                        filename = line.strip().replace(delimiter, "")
+                        if filename not in list:
+                            list.append(filename)
