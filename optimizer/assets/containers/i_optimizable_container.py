@@ -1,3 +1,4 @@
+from typing import List
 from abc import abstractmethod
 
 class IOptimizableContainer():
@@ -6,18 +7,12 @@ class IOptimizableContainer():
 	"""
 
 	@abstractmethod
-	def load_assets(self):
+	def add_items(self, items: List[str]):
 		"""
-		Load all assets from the CSV hint file.
+		Add assets to the container to optimize.
 		"""
 		pass
 
-	@abstractmethod
-	def move(self, path, type):
-		"""
-		Move all assets to a specified path.
-		"""
-		pass
 
 	@abstractmethod
 	def optimize(self):
@@ -26,9 +21,10 @@ class IOptimizableContainer():
 		"""
 		pass
 
+
 	@abstractmethod
-	def delete(self):
+	def copy(self, to_path: str):
 		"""
-		Delete all assets.
+		Copy all assets to a specific path.
 		"""
 		pass
