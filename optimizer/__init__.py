@@ -1,1 +1,0 @@
-from optimizer.assets import *

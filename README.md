@@ -10,15 +10,14 @@ This program takes all images, materials, and xmodels that are used by a specifi
 ![](https://i.imgur.com/Odr1xLb.png)
 
 ```c
-optimizer <input path> <output path>
+optimizer <input> <output>
 ```
 
 ## Instructions
 In order to use this application, just download the archived file down below, and extract it to any destination. You can create a shortcut of the executable file and place it anywhere, and run it from said shortcut.
 
 ## Pre-Requisites
-1. [Python 3.6+](https://www.python.org/)
-2. **Optional** [Visual Studio](https://visualstudio.microsoft.com/)
+1. [Python](https://www.python.org/)
 
 ### [Download](https://github.com/Iswenzz/CoD4-Mod-Optimizer/releases)
 
