@@ -4,8 +4,8 @@ import shutil
 from typing import List
 from pathlib import Path
 
-from src.containers import Container
 from src.mod import Raw
+from .container import Container
 
 
 class ImageContainer(Container):
