@@ -42,8 +42,8 @@ class CSV:
         """
         Parse the CSV assets.
         """
-        with open(Path(self.path), encoding="utf8") as f:
-            for line in f:
+        with open(Path(self.path), encoding="utf8") as csv_file:
+            for line in csv_file:
                 for name, array in self.assets.items():
                     delimiter = name + ","
                     if line.startswith(delimiter):
