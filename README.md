@@ -7,8 +7,6 @@
 
 This program takes all images, materials, and xmodels that are used by a specific Call of Duty 4 mod and exports them to a new folder. After these items are prepared in the newly created folder, this program removes all of the unused assets in the mod, clearing space for new assets to be used.
 
-![](https://i.imgur.com/Odr1xLb.png)
-
 ```c
 optimizer <input> <output>
 ```
