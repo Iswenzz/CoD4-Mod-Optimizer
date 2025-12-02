@@ -10,30 +10,19 @@ from ..mod import Raw
 
 
 class MaterialContainer(Container):
-    """
-    Material container.
-    """
 
     materials: List[str] = []
     images: List[str] = []
 
     def add(self, items: List[str]):
-        """
-        Add materials.
-        """
+
         self.materials.extend(items)
 
     def process(self):
-        """
-        Process materials.
-        """
         for material in self.materials:
             self.find_images(material)
 
     def find_images(self, material: str):
-        """
-        Find all images used by the material.
-        """
         chars = r"A-Za-z0-9\-.,~_&$% "
         shortest_run = 1
         regexp = "[%s]{%d,}" % (chars, shortest_run)
@@ -50,9 +39,6 @@ class MaterialContainer(Container):
                     self.images.append(image)
 
     def copy(self, to_path: str):
-        """
-        Copy materials.
-        """
         print()
         print("#####################################")
         print("              Materials              ")

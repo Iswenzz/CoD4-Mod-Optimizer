@@ -14,9 +14,6 @@ Usage: ptimizer.exe <input path> <output path>
 
 
 def process(in_path: str, out_path: str):
-    """
-    Process mod assets.
-    """
     folders = ["materials", "material_properties", "xmodel", "images"]
 
     if os.path.exists(out_path):
@@ -58,9 +55,6 @@ def process(in_path: str, out_path: str):
 
 
 def main():
-    """
-    Entry point of the program.
-    """
     in_path = "in"
     out_path = "out"
 

@@ -10,30 +10,18 @@ from ..mod import Raw
 
 
 class XModelContainer(Container):
-    """
-    Xmodel container.
-    """
 
     xmodels: List[str] = []
     materials: List[str] = []
 
     def add(self, items: List[str]):
-        """
-        Add xmodels.
-        """
         self.xmodels.extend(items)
 
     def process(self):
-        """
-        Process xmodels.
-        """
         for xmodel in self.xmodels:
             self.find_materials(xmodel)
 
     def find_materials(self, xmodel: str):
-        """
-        Find all materials used by the xmodel.
-        """
         chars = r"A-Za-z0-9\-.,~_&$% "
         shortest_run = 1
         regexp = "[%s]{%d,}" % (chars, shortest_run)
@@ -50,9 +38,6 @@ class XModelContainer(Container):
                     self.materials.append(material)
 
     def copy(self, to_path: str):
-        """
-        Copy xmodels.
-        """
         print()
         print("#####################################")
         print("               XModels               ")

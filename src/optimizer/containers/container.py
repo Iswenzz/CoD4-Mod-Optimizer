@@ -3,24 +3,12 @@ from abc import abstractmethod
 
 
 class Container:
-    """
-    Represent an asset container.
-    """
 
     @abstractmethod
-    def add(self, items: List[str]):
-        """
-        Add assets.
-        """
+    def add(self, items: List[str]): ...
 
     @abstractmethod
-    def process(self):
-        """
-        Process assets.
-        """
+    def process(self): ...
 
     @abstractmethod
-    def copy(self, to_path: str):
-        """
-        Copy assets.
-        """
+    def copy(self, to_path: str): ...

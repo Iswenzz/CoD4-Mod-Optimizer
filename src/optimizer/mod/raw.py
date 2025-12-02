@@ -4,9 +4,6 @@ from os import walk
 
 
 class Raw:
-    """
-    Represent the raw folder.
-    """
 
     registry: Dict[str, List[str]] = {
         "xmodel": ["xmodel"],
@@ -27,9 +24,6 @@ class Raw:
 
     @staticmethod
     def initialize(path: str):
-        """
-        Initialize the raw folder.
-        """
         Raw.path = path
         Raw.images = Raw.files("image")
         Raw.materials = Raw.files("material")
@@ -37,16 +31,10 @@ class Raw:
 
     @staticmethod
     def file(asset: str, filename: str) -> str:
-        """
-        Get a file.
-        """
         return Path(Raw.path) / asset / filename
 
     @staticmethod
     def files(asset: str) -> List[str]:
-        """
-        Get all files.
-        """
         array = []
         for folder in Raw.registry[asset]:
             for _, _, files in walk(Path(Raw.path) / folder, topdown=False):

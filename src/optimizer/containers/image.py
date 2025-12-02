@@ -9,27 +9,16 @@ from ..mod import Raw
 
 
 class ImageContainer(Container):
-    """
-    Image container.
-    """
 
     images: List[str] = []
 
     def add(self, items: List[str]):
-        """
-        Add images.
-        """
         self.images.extend(items)
 
     def process(self):
-        """
-        Process images.
-        """
+        pass
 
     def copy(self, to_path: str):
-        """
-        Copy images.
-        """
         print()
         print("#####################################")
         print("               Images                ")
